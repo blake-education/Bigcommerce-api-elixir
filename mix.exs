@@ -34,7 +34,7 @@ defmodule Bigcommerce.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-    {:poison, "~> 1.4.0"}
+    {:poison, "~> 3.0"}
     ]
   end
 end
