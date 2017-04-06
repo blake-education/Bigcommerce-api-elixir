@@ -28,6 +28,8 @@ defmodule Bigcommerce.Client.Requester do
         {:ok, Poison.decode!(json_body)}
       {:ok, {{_httpvs, 201, _status_phrase}, _headers, json_body}} ->
         {:ok, Poison.decode!(json_body)}
+      {:ok, {{_httpvs, 204, _status_phrase}, _headers, _empty_body}} ->
+        {:ok, []}
       {:ok, {{_httpvs, status, _status_phrase}, json_body}} ->
         {:error, status, Poison.decode!(json_body)}
       {:ok, {{_httpvs, status, _status_phrase}, _headers, json_body}} ->
