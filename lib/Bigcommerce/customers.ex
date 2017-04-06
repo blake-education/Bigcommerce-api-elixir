@@ -2,7 +2,7 @@ defmodule Bigcommerce.Client.Customer do
   alias Bigcommerce.Client.Helpers
   alias Bigcommerce.Client.Requester
 
-  def get_customers(conf, params) do  
+  def get_customers(conf, params) do
     body = []
     ctype = 'application/x-www-form-urlencoded'
 
@@ -11,9 +11,10 @@ defmodule Bigcommerce.Client.Customer do
 
   def get_customer(conf, id) do
     body = []
-    ctype = 'application/x-www-form-urlencoded'
+    ctype = 'application/json'
 
-    Requester.request(:get, Helpers.url(conf[:endpoint], "/customers/" <> id), conf[:username], conf[:key], [], ctype, body)
+    url = Helpers.url(conf[:endpoint], "/customers/" <> id)
+    Requester.request(:get, url, conf[:username], conf[:key], [], ctype, body)
   end
 
   def create_customer(conf, params) do
@@ -48,7 +49,7 @@ defmodule Bigcommerce.Client.Customer do
 
   #address related functions
 
-  def get_customer_addresses(conf, customer_id, params) do  
+  def get_customer_addresses(conf, customer_id, params) do
     body = []
     ctype = 'application/x-www-form-urlencoded'
 

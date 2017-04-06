@@ -2,20 +2,22 @@ defmodule Bigcommerce.Client.Requester do
 
   def request(method, url, username, key, headers, ctype, body) do
     url = String.to_char_list(url)
+    headers = [auth_header(username, key), accept_header() | headers]
     case method do
       :get ->
-        headers = headers ++ [auth_header(username, key)]
         :httpc.request(:get, {url, headers}, [], [])
       method ->
-        headers = headers ++ [auth_header(username, key), {'Content-Type', ctype}]
+        headers = [{'Content-Type', ctype} | headers]
         :httpc.request(method, {url, headers, ctype, body}, [], body_format: :binary)
-    end 
+    end
     |> parse_response
 
   end
 
+  defp accept_header, do: {'Accept', 'application/json'}
+
   defp auth_header(username, key) do
-  {'Authorization', 'Basic ' ++ String.to_char_list(Base.encode64(username <> ":" <> key))}
+    {'Authorization', 'Basic ' ++ String.to_char_list(Base.encode64(username <> ":" <> key))}
   end
 
   defp parse_response(response) do
@@ -34,7 +36,7 @@ defmodule Bigcommerce.Client.Requester do
         {:error, status, Poison.decode!(json_body)}
       {:ok, {{_httpvs, status, _status_phrase}, _headers, json_body}} ->
         {:error, status, Poison.decode!(json_body)}
-      {:error, reason} -> 
+      {:error, reason} ->
         {:error, :bad_fetch, reason}
     end
   end
