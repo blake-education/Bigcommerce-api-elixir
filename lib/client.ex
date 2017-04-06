@@ -427,10 +427,10 @@ defmodule Bigcommerce.Client do
         unquote(Bigcommerce.Client.Shipping).get_shipping_method(conf(), id)
       end
       def get_store_info do
-        unquote(Bigcommerce.Client.Store).get_store_info(conf(), params)
+        unquote(Bigcommerce.Client.Store).get_store_info(conf())
       end
       def get_time do
-        unquote(Bigcommerce.Client.System).get_time(conf(), params)
+        unquote(Bigcommerce.Client.System).get_time(conf())
       end
     end
   end
